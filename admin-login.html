@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>כניסת מנהל</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <main class="container stack">
+    <div class="brand">
+      <div class="brand-badge">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <div>
+          <div class="brand-title">מערכת דוחות</div>
+          <div class="brand-subtitle">כניסת מנהל</div>
+        </div>
+      </div>
+
+      <div id="netPill" class="pill offline" title="סטטוס חיבור">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="netText">בודק חיבור…</span>
+      </div>
+    </div>
+
+    <section class="card stack" aria-label="כניסת מנהל">
+      <div>
+        <h1 class="card-title">קוד מנהל</h1>
+        <p class="card-desc">הזן קוד מנהל כדי להיכנס לאזור Admin.</p>
+      </div>
+
+      <div class="stack">
+        <div>
+          <label for="adminPin">קוד מנהל (4 ספרות)</label>
+          <input
+            id="adminPin"
+            class="input pin"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="• • • •"
+          />
+          <div class="help">לדוגמה: 9999</div>
+        </div>
+
+        <button id="btnAdminEnter" class="btn btn-primary" type="button">כניסה</button>
+        <div id="msg" class="notice hidden" role="status" aria-live="polite"></div>
+
+        <hr class="hr" />
+        <a class="btn" href="./index.html">חזרה למסך משתמש</a>
+      </div>
+    </section>
+
+    <div class="foot">© מערכת דוחות – Admin</div>
+  </main>
+
+  <script type="module" src="./js/auth-admin.js"></script>
+  <footer style="
+      margin-top:24px;
+      padding:12px 14px;
+      border-top:1px solid rgba(2,6,23,.12);
+      color:rgba(15,23,42,.75);
+      font-family:Heebo,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:12px;
+      font-weight:700;
+      text-align:center;
+    ">
+      נבנה על־ידי נור חטיב בשיתוף־פעולה עם מטאור אבטחה. כל הזכויות שמורות.
+    </footer>
+</body>
+</html>

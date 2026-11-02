@@ -1,0 +1,12 @@
+[functions.admin-auth]
+verify_jwt = false
+
+
+[functions.admin-list-reports]
+verify_jwt = false
+
+[functions.admin-get-report]
+verify_jwt = false
+
+[functions.admin-update-report]
+verify_jwt = false

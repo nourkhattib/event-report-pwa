@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>כניסה למילוי דוח</title>
+
+    <!-- Hebrew modern fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Assistant:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <main class="container stack">
+      <!-- Brand header -->
+      <div class="brand">
+        <div>
+          <div class="brand-badge">
+            <span class="brand-dot" aria-hidden="true"></span>
+            <div>
+              <div class="brand-title">מערכת דוחות</div>
+              <div class="brand-subtitle">כניסה למילוי דוח</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="netPill" class="pill offline" title="סטטוס חיבור">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="netText">בודק חיבור…</span>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <section class="card stack" aria-label="כניסה">
+        <div>
+          <h1 class="card-title">הזנת קוד כניסה</h1>
+          <p class="card-desc">
+            הזן/י קוד בן <strong>4 ספרות</strong> כדי להתחיל למלא דוח.
+            אם אין אינטרנט, אפשר להמשיך אופליין והמערכת תסנכרן אחר כך.
+          </p>
+        </div>
+
+        <div class="stack">
+          <div>
+            <label for="pin4">קוד 4 ספרות</label>
+            <input
+              id="pin4"
+              class="input pin"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              pattern="[0-9]*"
+              maxlength="4"
+              placeholder="• • • •"
+              aria-describedby="pinHelp"
+            />
+            <div id="pinHelp" class="help">לדוגמה: 1234</div>
+          </div>
+
+          <button id="btnEnter" class="btn btn-primary" type="button">
+            כניסה למילוי דוח
+          </button>
+
+          <div id="msg" class="notice hidden" role="status" aria-live="polite"></div>
+
+          <hr class="hr" />
+
+          <div class="notice warn">
+            <strong>שימו לב:</strong>
+            אם אין אינטרנט – אפשר להמשיך לעבוד. כשתחזור רשת, הנתונים יועלו אוטומטית.
+          </div>
+        </div>
+      </section>
+
+      <div class="foot">
+        © מערכת דוחות – עיצוב צהוב/לבן/כחול (Mobile First)
+      </div>
+    </main>
+
+    <!-- Auth logic (4-digit user PIN) -->
+    <script type="module" src="./js/auth-user.js"></script>
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      }
+    </script>
+    <footer style="
+      margin-top:24px;
+      padding:12px 14px;
+      border-top:1px solid rgba(2,6,23,.12);
+      color:rgba(15,23,42,.75);
+      font-family:Heebo,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:12px;
+      font-weight:700;
+      text-align:center;
+    ">
+      נבנה על־ידי נור חטיב בשיתוף־פעולה עם מטאור אבטחה. כל הזכויות שמורות.
+    </footer>
+  </body>
+</html>

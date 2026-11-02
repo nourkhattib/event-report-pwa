@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>מילוי דוח</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Assistant:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <!-- ✅ GEN: data-club + hidden club -->
+    <main class="container stack" data-club="gen">
+      <!-- Header -->
+      <div class="brand">
+        <div>
+          <div class="brand-badge" style="display:flex; align-items:center; gap:12px;">
+            <!-- ✅ GEN / Meteor: לוגו כללי -->
+            <!-- שים את הקובץ כאן: ./assets/logos/meteor.png (או תשנה נתיב) -->
+            <img
+              src="./assets/logos/meteor.png"
+              alt="מטאור אבטחה"
+              style="width:46px; height:46px; object-fit:contain; border-radius:10px; background:rgba(255,255,255,.6); padding:6px;"
+            />
+
+            <span class="brand-dot" aria-hidden="true"></span>
+            <div>
+              <div class="brand-title" id="reportHeaderTitle">דו"ח אירוע</div>
+              <div class="brand-subtitle">מערכת דוחות • מטאור אבטחה</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack" style="gap: 10px; align-items: flex-end;">
+          <div id="netPill" class="pill offline" title="סטטוס חיבור">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="netText">בודק חיבור…</span>
+          </div>
+
+          <button id="btnExit" class="btn btn-secondary btn-small" type="button">
+            יציאה
+          </button>
+          <button id="btnGoAdmin" class="btn btn-secondary btn-small">ADMIN</button>
+        </div>
+      </div>
+
+      <!-- ✅ club קבוע (נשמר גם ב-DB) -->
+      <input type="hidden" id="club" value="gen" />
+
+      <!-- Stepper -->
+      <div class="stepper" aria-label="שלבי הדוח">
+        <div class="step active" data-step-ind="1">
+          <div class="kicker">שלב 1</div>
+          <div class="label">פרטי הדו"ח</div>
+        </div>
+        <div class="step" data-step-ind="2">
+          <div class="kicker">שלב 2</div>
+          <div class="label">פרטי האוהד</div>
+        </div>
+        <div class="step" data-step-ind="3">
+          <div class="kicker">שלב 3</div>
+          <div class="label">תיאור העבירה</div>
+        </div>
+        <div class="step" data-step-ind="4">
+          <div class="kicker">שלב 4</div>
+          <div class="label">הערות וחתימה</div>
+        </div>
+      </div>
+
+      <div id="msg" class="notice hidden" role="status" aria-live="polite"></div>
+
+      <!-- =========================
+           STAGE 1
+           ========================= -->
+      <section class="stage-card stack" data-stage="1">
+        <div class="stage-title">
+          <h2>שלב 1 — פרטי הדו"ח</h2>
+          <span class="stage-badge" id="dateBadge">תאריך/שעה: …</span>
+        </div>
+
+        <div>
+          <label for="commanderName">שם ממלא הדו"ח (מפקד)</label>
+          <input id="commanderName" class="input" type="text" placeholder="שם מלא" />
+          <div class="help">אין צורך בטלפון של המפקד.</div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="reportType">סוג הדו"ח</label>
+            <select id="reportType" class="input">
+              <option value="" selected disabled>בחר/י</option>
+              <option value="דו&quot;ח אירוע">דו"ח אירוע</option>
+              <option value="דו&quot;ח חריג">דו"ח חריג</option>
+              <option value="דו&quot;ח גזענות">דו"ח גזענות</option>
+              <option value="דו&quot;ח פירוטכניקה">דו"ח פירוטכניקה</option>
+              <option value="דו&quot;ח אלימות">דו"ח אלימות</option>
+              <option value="אחר">אחר</option>
+            </select>
+          </div>
+          <div style="flex:1;">
+            <label for="reportFilledTime">שעת מילוי הדו"ח</label>
+            <input id="reportFilledTime" class="input" type="time" />
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+           STAGE 2
+           ========================= -->
+      <section class="stage-card stack hidden" data-stage="2">
+        <div class="stage-title">
+          <h2>שלב 2 — פרטי האוהד</h2>
+          <span class="stage-badge">פרטים + צילום מסמכים</span>
+        </div>
+
+        <div>
+          <label for="fanName">שם האוהד</label>
+          <input id="fanName" class="input" type="text" placeholder="שם מלא" />
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="fanPhone">טלפון</label>
+            <input id="fanPhone" class="input" inputmode="tel" placeholder="05X-XXXXXXX" />
+          </div>
+          <div style="flex:1;">
+            <label for="fanId">תעודת זהות (לא חובה)</label>
+            <input id="fanId" class="input" inputmode="numeric" pattern="[0-9]*" maxlength="9" placeholder="עד 9 ספרות" />
+          </div>
+        </div>
+
+        <div>
+          <label for="fanAddress">כתובת (לא חובה)</label>
+          <input id="fanAddress" class="input" type="text" placeholder="עיר, רחוב, מספר…" />
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="idPhoto">צילום תעודה מזהה (אופציונלי)</label>
+            <input id="idPhoto" class="input" type="file" accept="image/*" />
+            <div class="help">אפשר לבחור מהגלריה או לצלם.</div>
+          </div>
+          <div style="flex:1;">
+            <label for="ticketType">כרטיס כניסה</label>
+            <select id="ticketType" class="input">
+              <option value="" selected disabled>בחר/י</option>
+              <option value="מנוי">מנוי</option>
+              <option value="כרטיס">כרטיס</option>
+              <option value="לא הציג כרטיס">לא הציג כרטיס</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="ticketPhoto">צילום כרטיס (אופציונלי)</label>
+          <input id="ticketPhoto" class="input" type="file" accept="image/*" />
+          <div class="help">אפשר לבחור מהגלריה או לצלם.</div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="birthDate">תאריך לידה</label>
+            <input id="birthDate" class="input" type="date" />
+          </div>
+          <div style="flex:1;">
+            <label for="adultMinor">קטין או בגיר</label>
+            <select id="adultMinor" class="input">
+              <option value="" selected disabled>בחר/י</option>
+              <option value="בגיר">בגיר</option>
+              <option value="קטין">קטין</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="parentsBlock" class="stack hidden">
+          <hr class="hr" />
+          <div class="notice warn"><strong>קטין:</strong> נא להזין פרטי הורים.</div>
+
+          <div class="row">
+            <div style="flex:1;">
+              <label for="fatherName">שם האב</label>
+              <input id="fatherName" class="input" type="text" />
+            </div>
+            <div style="flex:1;">
+              <label for="motherName">שם האם</label>
+              <input id="motherName" class="input" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1;">
+              <label for="parentPhone">טלפון אחד ההורים</label>
+              <input id="parentPhone" class="input" inputmode="tel" placeholder="05X-XXXXXXX" />
+            </div>
+            <div style="flex:1;">
+              <label for="parentAddress">כתובת הורים (לא חובה)</label>
+              <input id="parentAddress" class="input" type="text" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+           STAGE 3
+           ========================= -->
+      <section class="stage-card stack hidden" data-stage="3">
+        <div class="stage-title">
+          <h2>שלב 3 — תיאור העבירה</h2>
+          <span class="stage-badge">מיקום מדויק + תיאור</span>
+        </div>
+
+        <!-- ✅ GEN: stand/gate/block טקסט חופשי -->
+        <div class="row">
+          <div style="flex:1;">
+            <label for="stand">מיקום: יציע</label>
+            <input
+              id="stand"
+              class="input"
+              type="text"
+              placeholder="הקלד/י יציע (טקסט חופשי)"
+              autocomplete="off"
+            />
+          </div>
+
+          <div style="flex:1;">
+            <label for="gate">מספר שער</label>
+            <input
+              id="gate"
+              class="input"
+              type="text"
+              placeholder="הקלד/י שער (טקסט חופשי)"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="block">מספר גוש</label>
+          <input
+            id="block"
+            class="input"
+            type="text"
+            placeholder="הקלד/י גוש (טקסט חופשי)"
+            autocomplete="off"
+          />
+          <div class="help">אפשר להזין טקסט חופשי (לדוגמה: 205 / A12 / יציע עליון וכו׳).</div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="approxTime">ביצוע העבירה (משוער)</label>
+            <input id="approxTime" class="input" type="time" />
+            <div class="help">אם לא משנים — יישמר כמו שעת מילוי הדו״ח.</div>
+          </div>
+          <div style="flex:1;">
+            <label for="offenseType">סוג העבירה</label>
+            <select id="offenseType" class="input">
+              <option value="" selected disabled>בחר/י</option>
+              <option value="אלימות">אלימות</option>
+              <option value="הפרת סדר">הפרת סדר</option>
+              <option value="פירוטכניקה">פירוטכניקה</option>
+              <option value="קללות/גזענות">קללות/גזענות</option>
+              <option value="אלכוהול/סמים">אלכוהול/סמים</option>
+              <option value="אחר">אחר</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ✅ התערבות משטרתית -->
+        <hr class="hr" />
+        <div class="stack" style="gap:10px;">
+          <div class="notice" style="background: rgba(11,78,162,.06); border-color: rgba(11,78,162,.18);">
+            <strong>התערבות משטרתית:</strong> בחר/י האם בוצעה התערבות ומה הסוג.
+          </div>
+
+          <div class="row">
+            <div style="flex:1;">
+              <label for="policeIntervention">האם בוצעה התערבות משטרתית?</label>
+              <select id="policeIntervention" class="input">
+                <option value="false" selected>לא</option>
+                <option value="true">כן</option>
+              </select>
+              <div class="help">ברירת מחדל: לא</div>
+            </div>
+
+            <div style="flex:1;">
+              <label for="policeAction">סוג התערבות</label>
+              <select id="policeAction" class="input" disabled>
+                <option value="" selected disabled>בחר/י</option>
+                <option value="arrest">מעצר</option>
+                <option value="ban">הרחקה</option>
+                <option value="fine">קנס מנהלי</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="banBlock" class="row hidden">
+            <div style="flex:1;">
+              <label for="banDurationDays">אם נבחרה הרחקה — כמה זמן (ימים)?</label>
+              <input
+                id="banDurationDays"
+                class="input"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                step="1"
+                placeholder="לדוגמה: 30"
+              />
+            </div>
+          </div>
+
+          <div id="fineBlock" class="row hidden">
+            <div style="flex:1;">
+              <label for="fineAmountIls">אם נבחר קנס — כמה הקנס (₪)?</label>
+              <input
+                id="fineAmountIls"
+                class="input"
+                type="number"
+                inputmode="decimal"
+                min="1"
+                step="1"
+                placeholder="לדוגמה: 500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="offenseDesc">תיאור העבירה</label>
+          <textarea id="offenseDesc" class="input" placeholder="מה קרה בפועל?"></textarea>
+        </div>
+
+        <div>
+          <label for="fanReaction">תגובת האוהד</label>
+          <textarea id="fanReaction" class="input" placeholder="איך האוהד הגיב? שיתף פעולה/התנגד/ברח…"></textarea>
+        </div>
+      </section>
+
+      <!-- =========================
+           STAGE 4
+           ========================= -->
+      <section class="stage-card stack hidden" data-stage="4">
+        <div class="stage-title">
+          <h2>שלב 4 — הערות כלליות + חתימה</h2>
+          <span class="stage-badge">שמירה וסיום</span>
+        </div>
+
+        <div>
+          <label for="generalNotes">הערות כלליות</label>
+          <textarea id="generalNotes" class="input" placeholder="כל דבר נוסף שחשוב לתיעוד…"></textarea>
+          <div class="help">אם לא כותבים — נשמר “אין”.</div>
+        </div>
+
+        <div class="signature-box stack">
+          <div class="row space-between">
+            <label style="margin:0;">חתימה</label>
+            <div class="row" style="gap:10px;">
+              <button id="btnSigClear" class="btn btn-secondary btn-small" type="button">נקה</button>
+            </div>
+          </div>
+
+          <canvas id="sigCanvas" class="signature-canvas"></canvas>
+          <div class="help">אפשר לחתום עם האצבע/עכבר.</div>
+        </div>
+
+        <div class="notice warn">
+          <strong>סיום:</strong> “שמירה וסיום” שומר אופליין ומכניס לתור שליחה. כשיש אינטרנט — יסתנכרן.
+        </div>
+      </section>
+
+      <!-- Nav buttons -->
+      <div class="navbar-actions">
+        <button id="btnBack" class="btn btn-ghost btn-small" type="button">הקודם</button>
+
+        <div class="row" style="gap:10px; flex:1; justify-content:flex-end; flex-wrap:wrap;">
+          <button id="btnSaveDraft" class="btn btn-secondary btn-small" type="button">שמירה</button>
+          <button id="btnNext" class="btn btn-primary btn-small" type="button">הבא</button>
+          <button id="btnFinish" class="btn btn-primary hidden" type="button">שמירה וסיום</button>
+        </div>
+      </div>
+
+      <div class="foot">מערכת דוחות • 4 שלבים • Mobile First • Offline Ready</div>
+    </main>
+
+    <script type="module" src="./js/report.js"></script>
+
+    <!-- ✅ Meteor footer -->
+    <footer style="
+      margin-top:24px;
+      padding:12px 14px;
+      border-top:1px solid rgba(2,6,23,.12);
+      color:rgba(15,23,42,.75);
+      font-family:Heebo,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:12px;
+      font-weight:700;
+      text-align:center;
+    ">
+      נבנה על־ידי נור חטיב בשיתוף־פעולה עם מטאור אבטחה. כל הזכויות שמורות.
+    </footer>
+
+  </body>
+</html>

@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>דוח אירוע • צפייה</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <style>
+    :root{
+      --maccabi-yellow:#ffffff;
+      --maccabi-blue:#0B4EA2;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --card:#ffffff;
+      --line:rgba(2,6,23,.10);
+      --bg:#d4f8ff;
+    }
+
+    body{font-family:"Heebo",system-ui,-apple-system,Segoe UI,Roboto; background:linear-gradient(180deg,var(--bg),#fff); color:var(--ink);}
+    .page{max-width:1200px;margin:0 auto;padding:18px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .titleBox{display:flex; flex-direction:column; gap:4px;}
+    h1{margin:0;font-size:28px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px}
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:10px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn.primary{
+      background:var(--maccabi-blue);
+      border-color:var(--maccabi-blue);
+      color:#fff;
+    }
+    .btn.danger{
+      background:#fff;
+      border-color:rgba(220,38,38,.35);
+      color:#b91c1c;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      font-size:12px; color:var(--muted);
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--maccabi-blue);display:inline-block}
+
+    .msg{
+      margin:10px 0;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(11,78,162,.25);
+      background:rgba(11,78,162,.06);
+      font-weight:700;
+    }
+    .msg.error{border-color:rgba(220,38,38,.35); background:rgba(220,38,38,.06); color:#b91c1c}
+    .hidden{display:none}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      margin-top:12px;
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr;} }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:0 12px 30px rgba(2,6,23,.06);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      background:linear-gradient(180deg, rgba(178, 217, 253, 0.22), rgba(255,255,255,0));
+    }
+    .cardTitle{margin:0;font-size:16px;font-weight:900}
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:800;
+    }
+    .cardBody{padding:14px}
+
+    .sectionTitle{
+      margin:14px 0 8px;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 700px){ .form{grid-template-columns:1fr;} }
+
+    .field{display:flex;flex-direction:column;gap:6px}
+    .label{font-size:12px;color:var(--muted);font-weight:800}
+    .input, .select, .textarea{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background:#fff;
+      font-family:inherit;
+      outline:none;
+    }
+    .textarea{min-height:120px;resize:vertical}
+
+    .imgGrid{display:grid;grid-template-columns:1fr;gap:12px}
+    .imgBox{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .imgTop{
+      padding:10px 12px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background:rgba(178, 217, 253, 0.22);
+    }
+    .imgTop b{font-size:13px}
+    .imgBox img{
+      width:100%;
+      display:block;
+      max-height:320px;
+      object-fit:contain;
+      background:#fff;
+    }
+    .imgBox .emptyImg{
+      padding:18px;
+      color:var(--muted);
+      font-weight:800;
+      text-align:center;
+    }
+    .fileRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 12px;border-top:1px solid var(--line)}
+    .fileRow input{max-width:260px}
+
+    .viewOnly .input,
+    .viewOnly .select,
+    .viewOnly .textarea{
+      background:rgba(2,6,23,.03);
+      pointer-events:none;
+    }
+    .viewOnly .fileRow{display:none;}
+
+    /* ===== Button unification patch ===== */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border:1px solid rgba(11,78,162,.18);
+      background:rgba(255,255,255,.92);
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:.2px;
+      box-shadow:0 10px 22px rgba(11, 19, 32, 0.08);
+      transition:transform .06s ease, filter .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+      text-decoration:none;
+      color:inherit;
+    }
+    .btn:hover{ filter:brightness(.99); }
+    .btn:active{ transform:scale(.985); box-shadow:0 8px 18px rgba(11, 19, 32, 0.08); }
+    .btn:focus-visible{ outline:3px solid rgba(11,78,162,.35); outline-offset:2px; }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+
+    .btn.primary{
+      background:linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+      color:#0a0f1a;
+      border-color:rgba(11,78,162,.12);
+      box-shadow:0 12px 26px rgba(255, 210, 0, 0.28);
+    }
+    .btn.danger{
+      background:rgba(255, 239, 239, 0.92);
+      border-color:rgba(180,35,24,.30);
+      color:#b42318;
+      box-shadow:none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="top">
+      <div class="titleBox">
+        <h1 id="pageTitle">דוח אירוע</h1>
+        <div class="sub" id="meta">טוען…</div>
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="./admin.html">חזרה ל-Admin</a>
+        <button class="btn" id="btnEdit">עריכה</button>
+        <button class="btn primary hidden" id="btnSave">שמירה</button>
+        <button class="btn danger" id="btnDelete">מחיקה</button>
+      </div>
+    </div>
+
+    <div id="msg" class="msg hidden"></div>
+
+    <div class="grid">
+      <!-- LEFT: Full details -->
+      <section class="card viewOnly" id="cardForm">
+        <div class="cardHead">
+          <h2 class="cardTitle">כל פרטי הדו״ח</h2>
+          <span class="badge" id="statusBadge">status: —</span>
+        </div>
+
+        <div class="cardBody">
+          <div class="sectionTitle">כללי</div>
+          <div class="form">
+            <div class="field">
+              <div class="label">שם מפקד</div>
+              <input class="input" id="commander_name" />
+            </div>
+            <div class="field">
+              <div class="label">סוג דו״ח</div>
+              <input class="input" id="report_type" />
+            </div>
+            <div class="field">
+              <div class="label">שעת מילוי דו״ח</div>
+              <input class="input" id="report_filled_time" />
+            </div>
+            <div class="field">
+              <div class="label">סטטוס</div>
+              <select class="select" id="status">
+                <option value="new">new</option>
+                <option value="reviewed">reviewed</option>
+                <option value="closed">closed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sectionTitle">פרטי אוהד</div>
+          <div class="form">
+            <div class="field"><div class="label">שם אוהד</div><input class="input" id="fan_name" /></div>
+            <div class="field"><div class="label">טלפון</div><input class="input" id="fan_phone" /></div>
+            <div class="field"><div class="label">ת״ז</div><input class="input" id="fan_id" /></div>
+            <div class="field"><div class="label">כתובת</div><input class="input" id="fan_address" /></div>
+            <div class="field"><div class="label">סוג כרטיס</div><input class="input" id="ticket_type" /></div>
+            <div class="field"><div class="label">תאריך לידה</div><input class="input" id="birth_date" /></div>
+            <div class="field"><div class="label">קטין/בגיר</div><input class="input" id="adult_minor" /></div>
+          </div>
+
+          <!-- ✅ Police intervention section -->
+          <div class="sectionTitle">התערבות משטרתית</div>
+          <div class="form">
+            <div class="field">
+              <div class="label">האם בוצעה התערבות?</div>
+              <select class="select" id="police_intervention">
+                <option value="false">לא</option>
+                <option value="true">כן</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <div class="label">סוג התערבות</div>
+              <select class="select" id="police_action">
+                <option value="">—</option>
+                <option value="arrest">מעצר</option>
+                <option value="ban">הרחקה</option>
+                <option value="fine">קנס מנהלי</option>
+              </select>
+            </div>
+
+            <div class="field" id="banDaysWrap">
+              <div class="label">משך הרחקה (ימים)</div>
+              <input class="input" id="ban_duration_days" inputmode="numeric" />
+            </div>
+
+            <div class="field" id="fineAmountWrap">
+              <div class="label">סכום קנס (₪)</div>
+              <input class="input" id="fine_amount_ils" inputmode="numeric" />
+            </div>
+          </div>
+
+          <!-- ✅ Parents block wrapper (hide for בגיר) -->
+          <div id="parentsWrap">
+            <div class="sectionTitle">פרטי הורים (אם קטין)</div>
+            <div class="form">
+              <div class="field"><div class="label">שם אב</div><input class="input" id="father_name" /></div>
+              <div class="field"><div class="label">שם אם</div><input class="input" id="mother_name" /></div>
+              <div class="field"><div class="label">טלפון הורה</div><input class="input" id="parent_phone" /></div>
+              <div class="field"><div class="label">כתובת הורה</div><input class="input" id="parent_address" /></div>
+            </div>
+          </div>
+
+          <div class="sectionTitle">מיקום וזמן</div>
+          <div class="form">
+            <div class="field"><div class="label">יציע</div><input class="input" id="stand" /></div>
+            <div class="field"><div class="label">שער</div><input class="input" id="gate" /></div>
+            <div class="field"><div class="label">גוש</div><input class="input" id="block" /></div>
+            <div class="field"><div class="label">שעה משוערת</div><input class="input" id="approx_time" /></div>
+          </div>
+
+          <div class="sectionTitle">עבירה</div>
+          <div class="form">
+            <div class="field"><div class="label">סוג עבירה</div><input class="input" id="offense_type" /></div>
+            <div class="field"><div class="label">תגובת אוהד</div><input class="input" id="fan_reaction" /></div>
+            <div class="field" style="grid-column:1/-1">
+              <div class="label">תיאור עבירה</div>
+              <textarea class="textarea" id="offense_description"></textarea>
+            </div>
+          </div>
+
+          <div class="sectionTitle">הערות</div>
+          <div class="form">
+            <div class="field" style="grid-column:1/-1">
+              <div class="label">הערות כלליות</div>
+              <textarea class="textarea" id="general_notes"></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Images -->
+      <aside class="card">
+        <div class="cardHead">
+          <h2 class="cardTitle">קבצים ותמונות</h2>
+          <span class="badge">Storage</span>
+        </div>
+
+        <div class="cardBody">
+          <div class="imgGrid">
+
+            <div class="imgBox">
+              <div class="imgTop">
+                <b>תעודת זהות</b>
+                <span class="pill"><span class="dot"></span> ID</span>
+              </div>
+              <img id="img_id" alt="ID Photo" />
+              <div class="emptyImg hidden" id="img_id_empty">אין תמונה</div>
+              <div class="fileRow" id="row_id_file">
+                <input type="file" id="file_id" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="imgBox">
+              <div class="imgTop">
+                <b>כרטיס</b>
+                <span class="pill"><span class="dot"></span> Ticket</span>
+              </div>
+              <img id="img_ticket" alt="Ticket Photo" />
+              <div class="emptyImg hidden" id="img_ticket_empty">אין תמונה</div>
+              <div class="fileRow" id="row_ticket_file">
+                <input type="file" id="file_ticket" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="imgBox">
+              <div class="imgTop">
+                <b>חתימה (לצפייה בלבד)</b>
+                <span class="pill"><span class="dot"></span> Signature</span>
+              </div>
+              <img id="img_sig" alt="Signature" />
+              <div class="emptyImg hidden" id="img_sig_empty">אין חתימה</div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script type="module" src="./js/report-view.js"></script>
+  <footer style="
+      margin-top:24px;
+      padding:12px 14px;
+      border-top:1px solid rgba(2,6,23,.12);
+      color:rgba(15,23,42,.75);
+      font-family:Heebo,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:12px;
+      font-weight:700;
+      text-align:center;
+    ">
+      נבנה על־ידי נור חטיב בשיתוף־פעולה עם מטאור אבטחה. כל הזכויות שמורות.
+    </footer>
+</body>
+</html>
