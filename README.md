@@ -2,7 +2,12 @@
 
 Offline-first Progressive Web App for security staff to fill in event / work reports in the field — with signature, photos and PDF export — plus an admin dashboard. Deployed in white-label versions for several clients.
 
-> Screenshots: add images to a `docs/` folder and link them here.
+## Screenshots
+
+| Desktop | Mobile |
+|---|---|
+| **Login**<br><img src="docs/screenshots/login-desktop.png" width="560"> | <img src="docs/screenshots/login-mobile.png" width="200"> |
+| **Report form**<br><img src="docs/screenshots/report-form-desktop.png" width="560"> | <img src="docs/screenshots/report-form-mobile.png" width="200"> |
 
 ## Features
 - **Field report form** – event details, staff, incidents, on-screen signature, ID/ticket photo upload.
